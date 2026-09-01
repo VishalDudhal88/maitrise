@@ -1,0 +1,101 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/config/site';
+const { email, phone, phoneHref, location } = site.contact;
+const details = [
+  { label: 'Call for Consultation', value: phone, href: `tel:${phoneHref}` },
+  { label: 'Drop Us a Line', value: email, href: `mailto:${email}` },
+  { label: 'Office Location', value: location, href: undefined },
+];
+---
+<Base
+  title="Contact – Maitrise"
+  path="/contact/"
+  description="Get in touch with Maitrise Associates — call 7709053814, email maitriseassociates@gmail.com, or send us a message. Based in Sangli, Maharashtra."
+>
+  <section class="container-x pt-8 pb-6">
+    <nav class="text-xs tracking-wider uppercase text-muted flex items-center gap-2" aria-label="Breadcrumb">
+      <a href="/" class="hover:text-ink transition-colors">Home</a><span>/</span><span class="text-ink">Contact Us</span>
+    </nav>
+  </section>
+
+  <section class="container-x pb-24 md:pb-32 grid lg:grid-cols-2 gap-16">
+    <div>
+      <span class="eyebrow">Contact Us</span>
+      <h1 class="mt-5 font-display text-5xl md:text-7xl">Get in Touch</h1>
+      <p class="mt-6 max-w-md text-ink/70">
+        Tell us about your space and vision — we’ll get back to you to start the design conversation.
+      </p>
+      <dl class="mt-12 space-y-8">
+        {details.map((d) => (
+          <div class="border-t border-line pt-5">
+            <dt class="text-xs tracking-[0.2em] uppercase text-taupe-deep">{d.label}</dt>
+            <dd class="mt-2 font-display text-2xl text-ink">
+              {d.href ? <a href={d.href} class="hover:text-taupe transition-colors break-all">{d.value}</a> : d.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+
+    <div class="border border-line bg-cream/60 p-8 md:p-10">
+      <h2 class="font-display text-3xl">Send a Message</h2>
+      <form class="mt-8 space-y-5" data-enquiry novalidate>
+        <label class="block">
+          <span class="text-sm text-ink/80">Your name</span>
+          <input name="name" type="text" required class="form-field" autocomplete="name" />
+        </label>
+        <label class="block">
+          <span class="text-sm text-ink/80">Your email</span>
+          <input name="email" type="email" required class="form-field" autocomplete="email" />
+        </label>
+        <label class="block">
+          <span class="text-sm text-ink/80">Your message <span class="text-muted">(optional)</span></span>
+          <textarea name="message" rows="5" class="form-field"></textarea>
+        </label>
+        <p class="hidden text-sm text-red-700" data-error>Please enter your name and a valid email.</p>
+        <button type="submit" class="btn btn-primary w-full">Send Message</button>
+        <p class="hidden text-sm text-taupe-deep" data-ok>Thanks! Your email client should open with the message ready to send.</p>
+      </form>
+    </div>
+  </section>
+
+  <style>
+    .form-field {
+      margin-top: 0.4rem;
+      width: 100%;
+      border: 1px solid var(--color-line);
+      background: var(--color-cream);
+      padding: 0.8rem 1rem;
+      font-size: 0.95rem;
+      color: var(--color-ink);
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+    .form-field:focus { outline: none; border-color: var(--color-taupe); }
+  </style>
+
+  <script is:inline>
+    // MetForm replacement: client-side validation + mailto fallback.
+    // TODO (client sign-off): wire to a real endpoint (Formspree / serverless / SMTP).
+    (function () {
+      var form = document.querySelector('[data-enquiry]');
+      if (!form) return;
+      var err = form.querySelector('[data-error]');
+      var ok = form.querySelector('[data-ok]');
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var d = new FormData(form);
+        var name = (d.get('name') || '').toString().trim();
+        var email = (d.get('email') || '').toString().trim();
+        var message = (d.get('message') || '').toString().trim();
+        if (!name || !/.+@.+\..+/.test(email)) { err.classList.remove('hidden'); ok.classList.add('hidden'); return; }
+        err.classList.add('hidden');
+        var subject = encodeURIComponent('Website Enquiry from ' + name);
+        var body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message);
+        window.location.href = 'mailto:maitriseassociates@gmail.com?subject=' + subject + '&body=' + body;
+        ok.classList.remove('hidden');
+      });
+    })();
+  </script>
+</Base>

@@ -1,0 +1,17 @@
+---
+import Base from '@/layouts/Base.astro';
+import ProjectDetail from '@/components/ProjectDetail.astro';
+import { residential } from '@/data/projects';
+
+export function getStaticPaths() {
+  return residential.map((p) => ({ params: { slug: p.slug }, props: { project: p } }));
+}
+const { project } = Astro.props;
+---
+<Base
+  title={`${project.name} – Maitrise`}
+  path={`/residential-flat/${project.slug}/`}
+  description={`${project.heading} — a residential interior project by Maitrise Associates. ${project.brief}`}
+>
+  <ProjectDetail project={project} />
+</Base>

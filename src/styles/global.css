@@ -1,0 +1,145 @@
+@import 'tailwindcss';
+
+/*
+  Design tokens — extracted from the live Elementor global palette:
+    primary  #AD8D78 (warm taupe)   secondary #E1D8D1 (beige)
+    accent   #141414 (near-black)   text/cream #F5F2EF
+    neutrals #EEEEEE #D9D9D9 #C8C6C6 #222831
+  Fonts: Italiana (display serif) + DM Sans (body). An elegant, editorial tone
+  suited to a premium interior-design studio.
+*/
+@theme {
+  --color-taupe: #ad8d78;
+  --color-taupe-deep: #8f6f5b;
+  --color-beige: #e1d8d1;
+  --color-cream: #f5f2ef;
+  --color-ink: #141414;
+  --color-ink-2: #1e1a17;
+  --color-charcoal: #222831;
+
+  --color-surface: #f5f2ef;
+  --color-surface-2: #ece5df;
+  --color-surface-dark: #141414;
+  --color-line: #ddd3ca;
+  --color-muted: #8a8078;
+
+  --font-display: 'Italiana', ui-serif, Georgia, serif;
+  --font-body: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px rgba(20, 20, 20, 0.04), 0 12px 40px -12px rgba(20, 20, 20, 0.12);
+  --shadow-lift: 0 30px 70px -24px rgba(20, 20, 20, 0.35);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  .lenis.lenis-stopped { overflow: hidden; }
+
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    line-height: 1.08;
+    letter-spacing: 0.01em;
+    color: var(--color-ink);
+  }
+  /* Italiana ships a single weight (400). Force every display-font element to a
+     true 400 and disable faux-weight synthesis (elements like <figcaption> and
+     the footer wordmark otherwise inherit the body's 300 and get synthesised). */
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-weight: 400;
+    font-synthesis: none;
+  }
+
+  a { color: inherit; }
+  ::selection { background: var(--color-taupe); color: var(--color-cream); }
+  :focus-visible { outline: 2px solid var(--color-taupe); outline-offset: 3px; }
+}
+
+@layer components {
+  .container-x {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) { .container-x { padding-inline: 2.5rem; } }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--color-taupe-deep);
+  }
+  .eyebrow::before {
+    content: '';
+    width: 2.25rem;
+    height: 1px;
+    background: var(--color-taupe);
+  }
+
+  /* Rounded-pill buttons, matching the live site. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.05rem 2.6rem;
+    border-radius: 999px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: transform 0.4s var(--ease-out-expo), background 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .btn-primary { background: var(--color-taupe); color: var(--color-cream); }
+  .btn-primary:hover { background: var(--color-ink); transform: translateY(-2px); }
+  /* Default hero button: subtle taupe outline pill (as on the live site). */
+  .btn-outline { border: 1px solid var(--color-taupe); color: var(--color-ink); }
+  .btn-outline:hover { background: var(--color-taupe); color: var(--color-cream); transform: translateY(-2px); }
+  .btn-light { border: 1px solid rgba(245,242,239,0.5); color: var(--color-cream); }
+  .btn-light:hover { background: var(--color-cream); color: var(--color-ink); transform: translateY(-2px); }
+
+  /* Uppercase, letter-spaced body copy used in hero + section intros. */
+  .lede {
+    font-size: 1rem;
+    line-height: 1.9;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink);
+    font-weight: 400;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.9s var(--ease-out-expo), transform 0.9s var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+  .reveal.is-in { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  * { scroll-behavior: auto !important; }
+}
+.no-js .reveal { opacity: 1; transform: none; }

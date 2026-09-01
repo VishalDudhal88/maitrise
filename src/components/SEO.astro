@@ -1,0 +1,53 @@
+---
+import { site } from '@/config/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  path: string;
+  image?: string;
+}
+const { title, description = site.description, path, image = '/og-default.jpg' } = Astro.props;
+const canonical = new URL(path, site.url).href;
+const ogImage = new URL(image, site.url).href;
+
+// Interior-design studio → LocalBusiness / ProfessionalService.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'ProfessionalService'],
+  '@id': site.url + '#business',
+  name: site.legalName,
+  alternateName: site.name,
+  url: site.url,
+  logo: new URL('/logo.png', site.url).href,
+  image: ogImage,
+  description: site.description,
+  foundingDate: String(site.established),
+  founder: site.founders.split(' & ').map((n) => ({ '@type': 'Person', name: n })),
+  email: site.contact.email,
+  telephone: site.contact.phoneHref,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: site.contact.locality,
+    addressRegion: site.contact.region,
+    addressCountry: 'IN',
+  },
+  areaServed: ['Pune', 'Sangli', 'Aurangabad', 'Kolhapur', 'Goa'],
+  knowsAbout: ['Interior Design', 'Residential Interiors', 'Commercial Interiors', 'Interior Consulting'],
+};
+---
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content={site.name} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

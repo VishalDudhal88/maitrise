@@ -1,0 +1,55 @@
+---
+import Gallery from '@/components/Gallery.astro';
+import type { Project } from '@/data/projects';
+interface Props { project: Project; }
+const { project } = Astro.props;
+---
+<!-- Breadcrumb + intro -->
+<section class="container-x pt-6 pb-4">
+  <nav class="text-xs tracking-wider uppercase text-muted flex flex-wrap items-center gap-2" aria-label="Breadcrumb">
+    <a href="/" class="hover:text-ink transition-colors">Home</a><span>/</span>
+    <a href={project.categoryPath} class="hover:text-ink transition-colors">{project.categoryLabel}</a><span>/</span>
+    <span class="text-ink">{project.name}</span>
+  </nav>
+</section>
+
+<section class="container-x pb-14 md:pb-20 grid lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
+  <div class="reveal">
+    <span class="eyebrow">Project Detail</span>
+    <h1 class="mt-5 font-display text-4xl md:text-6xl leading-[1.03]">{project.heading}</h1>
+    <p class="mt-7 text-ink/75 leading-relaxed max-w-2xl">{project.brief}</p>
+    <div class="mt-8">
+      <h2 class="text-sm tracking-[0.2em] uppercase text-taupe-deep">Role</h2>
+      <ul class="mt-4 space-y-2">
+        {project.role.map((r) => (
+          <li class="flex gap-3 text-ink/75"><span class="text-taupe">—</span>{r}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <aside class="reveal lg:sticky lg:top-28 border border-line bg-cream/60 p-8">
+    <dl class="divide-y divide-line">
+      {project.meta.map((m) => (
+        <div class="flex items-baseline justify-between gap-4 py-3.5 first:pt-0 last:pb-0">
+          <dt class="text-xs tracking-[0.16em] uppercase text-muted">{m.label}</dt>
+          <dd class="font-display text-lg text-ink text-right">{m.value}</dd>
+        </div>
+      ))}
+    </dl>
+    <a href="/contact/" class="btn btn-primary w-full mt-8">Enquire About This Project</a>
+  </aside>
+</section>
+
+<!-- Gallery -->
+<section class="container-x pb-24 md:pb-32">
+  <Gallery images={project.gallery} alt={project.alt} />
+</section>
+
+<!-- CTA -->
+<section class="bg-surface-dark text-cream">
+  <div class="container-x py-20 text-center reveal">
+    <h2 class="text-3xl md:text-4xl text-cream max-w-3xl mx-auto">Start your design journey today — book a consultation and let’s bring your dream space to life.</h2>
+    <a href="/contact/" class="btn btn-light mt-8">Contact Us</a>
+  </div>
+</section>

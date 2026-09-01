@@ -1,0 +1,101 @@
+---
+import { site } from '@/config/site';
+import logo from '@/assets/brand/logo.png';
+import { Image } from 'astro:assets';
+
+const current = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href.startsWith('/#')) return false;
+  return href === '/' ? current === '/' : current.startsWith(href);
+};
+// The whole site (incl. the home hero) is light, so the header is always the
+// solid/light variant.
+const solid = true;
+---
+<header id="site-header" class="fixed inset-x-0 top-0 z-50 transition-all duration-500" data-header data-solid={solid ? '' : undefined}>
+  <div class="container-x flex items-center justify-between gap-6 py-4 md:py-5">
+    <a href="/" class="shrink-0" aria-label={`${site.legalName} — home`}>
+      <Image src={logo} alt={site.legalName} class="h-10 md:h-12 w-auto" loading="eager" />
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-9" aria-label="Primary" data-nav>
+      {site.nav.map((item) => (
+        <a
+          href={item.href}
+          class:list={['nav-link text-sm tracking-wide transition-colors', isActive(item.href) && 'is-current']}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+        >{item.label}</a>
+      ))}
+    </nav>
+
+    <div class="hidden lg:block">
+      <a href={site.cta.href} class="btn btn-primary">{site.cta.label}</a>
+    </div>
+
+    <button type="button" class="lg:hidden inline-flex flex-col gap-1.5 p-2" aria-label="Open menu" aria-expanded="false" data-menu-toggle>
+      <span class="block h-px w-6 bg-current transition-transform"></span>
+      <span class="block h-px w-6 bg-current transition-opacity"></span>
+      <span class="block h-px w-6 bg-current transition-transform"></span>
+    </button>
+  </div>
+
+  <div class="lg:hidden overflow-hidden bg-cream border-t border-line max-h-0 transition-[max-height] duration-500 ease-out" data-mobile-menu>
+    <nav class="container-x flex flex-col py-5" aria-label="Mobile">
+      {site.nav.map((item) => (
+        <a href={item.href} class="py-3 text-base text-ink border-b border-line/60 tracking-wide">{item.label}</a>
+      ))}
+      <a href={site.cta.href} class="btn btn-primary mt-5">{site.cta.label}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]') as HTMLElement | null;
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const menu = document.querySelector('[data-mobile-menu]') as HTMLElement | null;
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    if (menu) menu.style.maxHeight = open ? '0px' : menu.scrollHeight + 'px';
+  });
+</script>
+
+<style>
+  /* Top state: transparent over the dark hero, light text. */
+  [data-header] { color: var(--color-cream); }
+  [data-header] .nav-link { color: rgba(245, 242, 239, 0.85); }
+  [data-header] .nav-link:hover, [data-header] .nav-link.is-current { color: var(--color-cream); }
+
+  /* Scrolled state: solid cream bar, dark text. */
+  [data-header].is-scrolled {
+    background: color-mix(in srgb, var(--color-cream) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    box-shadow: 0 1px 0 var(--color-line), 0 16px 40px -30px rgba(0, 0, 0, 0.5);
+    color: var(--color-ink);
+  }
+  [data-header].is-scrolled .nav-link { color: var(--color-muted); }
+  [data-header].is-scrolled .nav-link:hover,
+  [data-header].is-scrolled .nav-link.is-current { color: var(--color-ink); }
+
+  .nav-link { position: relative; }
+  .nav-link.is-current::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -6px;
+    width: 100%; height: 1px;
+    background: var(--color-taupe);
+  }
+  /* Non-home pages don't have a dark hero behind the header — start solid. */
+  [data-header][data-solid] {
+    background: color-mix(in srgb, var(--color-cream) 92%, transparent);
+    backdrop-filter: saturate(140%) blur(12px);
+    color: var(--color-ink);
+  }
+  [data-header][data-solid] .nav-link { color: var(--color-muted); }
+  [data-header][data-solid] .nav-link:hover,
+  [data-header][data-solid] .nav-link.is-current { color: var(--color-ink); }
+</style>

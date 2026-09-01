@@ -1,0 +1,21 @@
+{
+  "name": "maitrise-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Maitrise Associates (maitrise.in) — static Astro rebuild. Same URLs & content, new premium design.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "astro": "^7.2.10",
+    "lenis": "^1.3.11",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^4.1.14"
+  }
+}

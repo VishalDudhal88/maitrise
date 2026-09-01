@@ -1,0 +1,180 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/config/site';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { residential, commercial } from '@/data/projects';
+
+const homeImgs = Object.entries(
+  import.meta.glob<{ default: ImageMetadata }>('@/assets/home/*.{jpg,jpeg,png,webp}', { eager: true }),
+)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([, m]) => m.default);
+const collage = [homeImgs[0], homeImgs[1], homeImgs[6]];
+const foundersImg = homeImgs[3];
+const aboutInterior = homeImgs[2];
+const customImg = homeImgs[5];
+const consultImg = homeImgs[7];
+const restaurantImg = homeImgs[9];
+
+const values = [
+  { t: 'Elevate Your Space', d: 'Redefine your surroundings with curated interiors that balance luxury, functionality, and timeless style.', icon: 'M3 21V9l9-6 9 6v12h-6v-7H9v7z' },
+  { t: 'Crafting Timeless Beauty', d: 'Every detail is designed with purpose, shaping spaces that remain beautiful and inspiring for generations.', icon: 'M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z' },
+  { t: 'Personalized Elegance', d: 'Where your individuality meets design—crafted spaces that speak elegance in every detail.', icon: 'M12 21s-7-4.35-9.5-8.5C1 9 3 5 6.5 5 9 5 12 8 12 8s3-3 5.5-3C21 5 23 9 21.5 12.5 19 16.65 12 21 12 21z' },
+  { t: 'Beyond Aesthetics', d: 'It’s more than just style; we craft environments that inspire living, productivity, and connection.', icon: 'M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7zm10 3a3 3 0 100-6 3 3 0 000 6z' },
+  { t: 'Tailored Luxury', d: 'We craft luxurious interiors that reflect your personality, tailored to your lifestyle and vision.', icon: 'M12 2l3 6 6 .5-4.5 4 1.5 6L12 15l-6 3.5 1.5-6L3 8.5 9 8z' },
+  { t: 'Sensory Harmony', d: 'We design environments that engage every sense — evoking comfort, calm, and effortless sophistication.', icon: 'M4 18V6a2 2 0 012-2h12a2 2 0 012 2v12M4 14h16M9 4v10' },
+];
+
+const categories = [
+  { name: 'Residential Flats', img: residential[0].cover, href: '/residential-flat/' },
+  { name: 'Residential Bunglow', img: residential[3].cover, href: '/residential-flat/' },
+  { name: 'Commercial Office Spaces', img: commercial[0].cover, href: '/commercial-space/' },
+  { name: 'Commercial Restaurant', img: restaurantImg, href: '/commercial-space/' },
+];
+
+const testimonials = [
+  { name: 'Suraj Salvi', quote: 'MaitRise is amazing team with great expertise and experience, they really value customers and does not push beyond the requirement or budget. Basically in budget amazing interior for your dream home. I highly recommend MaitRise for your dream home.' },
+  { name: 'Sandeep Chavan', quote: 'We had appointed Maitrise Associates (Bhushan and Sonali) for complete interior work of our 3BHK in Pune. We are very happy with the uniqueness of their designs and responsiveness on our suggested queries and changes in designs in the initial stages of project.' },
+  { name: 'Priyanka Thorat', quote: 'Really nice experience. Unique designs.' },
+];
+---
+<Base title="Maitrise" path="/">
+  <!-- HERO: split (name left / description right) + image collage -->
+  <section class="bg-gradient-to-b from-surface-2 to-surface">
+    <div class="container-x pt-10 md:pt-14 pb-10 grid lg:grid-cols-2 gap-8 lg:gap-16 items-start">
+      <div>
+        <h1 class="font-display text-5xl sm:text-6xl lg:text-7xl leading-[0.98]">MAIT-RISE<br />ASSOCIATES</h1>
+        <p class="mt-5 lede text-sm md:text-base tracking-[0.18em]">Interior Designing and Consulting Firm</p>
+      </div>
+      <div class="lg:pt-4">
+        <p class="lede text-xs md:text-sm text-ink/75 leading-[2]">
+          As co-founders of MAIT-RISE Associates, we create unique, cohesive designs that reflect each client’s style
+          and preferences, are both functional and aesthetic, and include personalized palettes to enhance mood and ambiance.
+        </p>
+        <div class="mt-7 flex items-center gap-4">
+          <a href="/projects/" class="btn btn-outline">View Our Project</a>
+          <a href="/projects/" aria-label="View projects" class="inline-flex h-12 w-12 items-center justify-center rounded-full border border-taupe text-taupe-deep hover:bg-taupe hover:text-cream transition-colors">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Staggered 3-image collage -->
+    <div class="container-x pb-16 md:pb-24">
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-5 items-start">
+        <div class="rounded-2xl overflow-hidden reveal md:mt-20"><Image src={collage[0]} alt="Interior by Maitrise Associates" widths={[400, 700]} sizes="33vw" class="w-full h-[300px] md:h-[420px] object-cover" loading="eager" /></div>
+        <div class="rounded-2xl overflow-hidden reveal col-span-2 md:col-span-1"><Image src={collage[1]} alt="Interior by Maitrise Associates" widths={[500, 900]} sizes="33vw" class="w-full h-[380px] md:h-[540px] object-cover" loading="eager" /></div>
+        <div class="rounded-2xl overflow-hidden reveal md:mt-20 hidden md:block"><Image src={collage[2]} alt="Interior by Maitrise Associates" widths={[400, 700]} sizes="33vw" class="w-full h-[300px] md:h-[420px] object-cover" /></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT: images left / text right -->
+  <section id="about" class="container-x py-20 md:py-28 grid lg:grid-cols-2 gap-14 items-center scroll-mt-24">
+    <div class="relative reveal">
+      <Image src={foundersImg} alt={`${site.founders} — co-founders of Maitrise Associates`} widths={[400, 700]} sizes="(min-width:1024px) 40vw, 70vw" class="w-2/3 aspect-[3/4] object-cover rounded-2xl" />
+      <div class="absolute bottom-0 right-0 w-1/2 border-8 border-surface rounded-2xl overflow-hidden">
+        <Image src={aboutInterior} alt="Maitrise Associates project" widths={[300, 500]} sizes="30vw" class="w-full aspect-square object-cover" />
+      </div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">About Maitrise</span>
+      <h2 class="mt-5 text-4xl md:text-6xl">Company Experience</h2>
+      <p class="mt-7 text-ink/75 leading-relaxed font-light">
+        Established in 2017 and incorporated in May 2020, Mait-Rise now oversees 20+ active projects at any time—ranging
+        from bare-shell flats and bungalows to restaurants and large office spaces—and has completed 60+ projects across
+        Pune, Sangli, Aurangabad, Kolhapur, and Goa.
+      </p>
+      <p class="mt-8 font-display text-2xl">{site.founders}</p>
+      <p class="text-sm text-muted">Co-Founders · MOB {site.contact.phone}</p>
+      <a href="/#services" class="btn btn-outline mt-8">Sonali &amp; Bhushan Bafna</a>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US: intro left / icon grid right -->
+  <section class="container-x py-20 md:py-28 grid lg:grid-cols-[0.85fr_1.4fr] gap-14">
+    <div class="reveal">
+      <span class="eyebrow">Why Choose Us</span>
+      <h2 class="mt-5 text-3xl md:text-4xl">With a passion for perfection and a commitment to detail, we transform visions into breathtaking realities.</h2>
+      <a href="/projects/" class="btn btn-outline mt-8">View Our Projects</a>
+    </div>
+    <div class="grid sm:grid-cols-2 gap-x-10 gap-y-10">
+      {values.map((v) => (
+        <div class="reveal flex gap-5">
+          <span class="shrink-0 flex h-12 w-12 items-center justify-center rounded-full bg-surface-2 text-taupe-deep">
+            <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d={v.icon} /></svg>
+          </span>
+          <div>
+            <h3 class="text-lg tracking-wide uppercase font-display">{v.t}</h3>
+            <p class="mt-2 text-sm text-ink/65 font-light leading-relaxed">{v.d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- SERVICES: intro + custom image left / stacked category cards right -->
+  <section id="services" class="container-x py-20 md:py-28 grid lg:grid-cols-2 gap-14 items-start scroll-mt-24">
+    <div class="reveal lg:sticky lg:top-28">
+      <span class="eyebrow">Services</span>
+      <h2 class="mt-5 text-4xl md:text-5xl">Custom Interior Design</h2>
+      <p class="mt-6 text-ink/70 font-light leading-relaxed max-w-md">
+        Comprehensive design services — planning, styling, and execution — all crafted to elevate your space with precision and beauty.
+      </p>
+      <a href="/projects/" class="btn btn-outline mt-8">View Our Projects</a>
+      <div class="mt-10 overflow-hidden rounded-2xl">
+        <Image src={customImg} alt="Custom interior design by Maitrise Associates" widths={[500, 900]} sizes="(min-width:1024px) 46vw, 92vw" class="w-full aspect-[4/3] object-cover" />
+      </div>
+    </div>
+    <div class="space-y-5">
+      {categories.map((c) => (
+        <a href={c.href} class="group relative block overflow-hidden reveal rounded-2xl">
+          <div class="aspect-[16/10] overflow-hidden bg-surface-2 rounded-2xl">
+            <Image src={c.img} alt={c.name} widths={[500, 900]} sizes="(min-width:1024px) 46vw, 92vw" class="h-full w-full object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105" />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent"></div>
+          <h3 class="absolute bottom-5 left-0 right-0 text-center text-xl text-cream tracking-wide">{c.name}</h3>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- CONSULT NOW: full-width image with overlay card -->
+  <section class="relative">
+    <Image src={consultImg} alt="Interior by Maitrise Associates" widths={[900, 1600, 2000]} sizes="100vw" class="w-full h-[60vh] md:h-[72vh] object-cover" />
+    <div class="absolute inset-0 bg-ink/20"></div>
+    <div class="absolute inset-0">
+      <div class="container-x h-full flex items-center">
+        <div class="bg-cream/95 backdrop-blur-sm p-9 md:p-12 max-w-md reveal">
+          <span class="eyebrow">Consult Now</span>
+          <h2 class="mt-5 text-3xl md:text-4xl">Start your design journey today</h2>
+          <p class="mt-4 text-ink/70 font-light">Book a consultation and let’s bring your dream space to life.</p>
+          <a href="/contact/" class="btn btn-primary mt-8">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS: heading left / cards right -->
+  <section class="bg-surface-2 py-20 md:py-28">
+    <div class="container-x grid lg:grid-cols-[0.9fr_1.3fr] gap-14 items-center">
+      <div class="reveal">
+        <span class="eyebrow">Testimonial</span>
+        <h2 class="mt-5 text-4xl md:text-6xl">Our Clients Trust</h2>
+        <p class="mt-5 text-ink/70 font-light max-w-sm">Here’s what they’ve shared about working with us.</p>
+        <a href="/contact/" class="btn btn-outline mt-8">See More Testimonials</a>
+      </div>
+      <div class="grid gap-5 reveal">
+        {testimonials.map((t, i) => (
+          <figure class:list={['rounded-2xl p-8 flex flex-col', i === 1 ? 'bg-taupe text-cream shadow-[var(--shadow-lift)]' : 'bg-cream border border-line']}>
+            <svg viewBox="0 0 24 24" class:list={['h-8 w-8 mb-4', i === 1 ? 'text-cream/60' : 'text-taupe/50']} fill="currentColor"><path d="M9.5 7C6.5 7 5 9.5 5 12.5V17h5v-5H7.5c0-1.5.8-2.5 2-2.5V7zm9 0c-3 0-4.5 2.5-4.5 5.5V17h5v-5H16c0-1.5.8-2.5 2-2.5V7z"/></svg>
+            <blockquote class:list={['leading-relaxed font-light', i === 1 ? 'text-cream/90' : 'text-ink/70']}>{t.quote}</blockquote>
+            <figcaption class:list={['mt-6 pt-5 border-t font-display text-xl', i === 1 ? 'border-cream/25' : 'border-line']}>{t.name}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

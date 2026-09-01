@@ -1,0 +1,55 @@
+---
+import { site } from '@/config/site';
+const year = new Date().getFullYear();
+const quickLinks = [
+  { label: 'About', href: '/#about' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Services', href: '/#services' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+<footer class="bg-surface-dark text-cream/70">
+  <div class="container-x py-20 grid gap-12 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.2fr]">
+    <div>
+      <p class="font-display text-3xl text-cream">Maitrise</p>
+      <p class="mt-1 text-xs tracking-[0.28em] uppercase text-taupe">Associates</p>
+      <p class="mt-6 text-sm leading-relaxed max-w-sm">
+        We the CO-FOUNDERS of MAIT-RISE ASSOCIATES make sure that, We provide unique and cohesive designs
+        reflecting clients style and preferences, which is functional and aesthetic, we also include personalized
+        palettes enhancing mood and ambiance.
+      </p>
+    </div>
+
+    <div>
+      <h3 class="text-cream text-sm tracking-[0.2em] uppercase mb-5">Quick Links</h3>
+      <ul class="space-y-3 text-sm">
+        {quickLinks.map((l) => (
+          <li><a href={l.href} class="hover:text-taupe transition-colors">{l.label}</a></li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-cream text-sm tracking-[0.2em] uppercase mb-5">Services</h3>
+      <ul class="space-y-3 text-sm">
+        {site.services.map((s) => <li>{s}</li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-cream text-sm tracking-[0.2em] uppercase mb-5">Contact Details</h3>
+      <ul class="space-y-3 text-sm">
+        <li>{site.contact.location}</li>
+        <li><a href={`mailto:${site.contact.email}`} class="hover:text-taupe transition-colors break-all">{site.contact.email}</a></li>
+        <li><a href={`tel:${site.contact.phoneHref}`} class="hover:text-taupe transition-colors">{site.contact.phone}</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream/10">
+    <div class="container-x py-6 text-center text-xs text-cream/50">
+      Maitrise © {year}, All Rights Reserved | Developed by
+      <a href={site.developer.url} class="hover:text-taupe transition-colors">{site.developer.name}</a>
+    </div>
+  </div>
+</footer>

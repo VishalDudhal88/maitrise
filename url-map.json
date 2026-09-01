@@ -1,0 +1,118 @@
+[
+  {
+    "type": "page",
+    "path": "/",
+    "oldUrl": "https://maitrise.in/",
+    "title": "Maitrise",
+    "h1": "MAIT-RISE ASSOCIATES",
+    "canonical": "https://maitrise.in/",
+    "sections": [
+      "Hero",
+      "About (Company Experience)",
+      "Why Choose Us (6)",
+      "Services / Custom Interior Design (4 categories)",
+      "Consult CTA",
+      "Testimonials (3)"
+    ],
+    "status": "rebuilt"
+  },
+  {
+    "type": "page",
+    "path": "/projects/",
+    "oldUrl": "https://maitrise.in/projects/",
+    "title": "Projects – Maitrise",
+    "h1": "Our Projects",
+    "canonical": "https://maitrise.in/projects/",
+    "status": "rebuilt",
+    "note": "Live cards linked to non-existent pages (404); repointed to the 6 real project pages."
+  },
+  {
+    "type": "page",
+    "path": "/residential-flat/",
+    "oldUrl": "https://maitrise.in/residential-flat/",
+    "title": "Residential Flat – Maitrise",
+    "h1": "Residential Flat",
+    "canonical": "https://maitrise.in/residential-flat/",
+    "status": "rebuilt",
+    "note": "Live page was an empty stub; now lists the 4 residential projects."
+  },
+  {
+    "type": "page",
+    "path": "/commercial-space/",
+    "oldUrl": "https://maitrise.in/commercial-space/",
+    "title": "Commercial Space – Maitrise",
+    "h1": "Commercial Space",
+    "canonical": "https://maitrise.in/commercial-space/",
+    "status": "rebuilt",
+    "note": "Live page was an empty stub; now lists the 2 commercial projects."
+  },
+  {
+    "type": "page",
+    "path": "/contact/",
+    "oldUrl": "https://maitrise.in/contact/",
+    "title": "Contact – Maitrise",
+    "h1": "Get in Touch",
+    "canonical": "https://maitrise.in/contact/",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/residential-flat/dreamscape/",
+    "oldUrl": "https://maitrise.in/residential-flat/dreamscape/",
+    "title": "Dreamscape – Maitrise",
+    "h1": "Dreamscape – A Pastel Kids’ Room Design",
+    "canonical": "https://maitrise.in/residential-flat/dreamscape/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/residential-flat/modern-warmth/",
+    "oldUrl": "https://maitrise.in/residential-flat/modern-warmth/",
+    "title": "Modern Warmth – Maitrise",
+    "h1": "Modern Warmth – A Contemporary Flat Design",
+    "canonical": "https://maitrise.in/residential-flat/modern-warmth/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/residential-flat/urban-comfort/",
+    "oldUrl": "https://maitrise.in/residential-flat/urban-comfort/",
+    "title": "Urban Comfort – Maitrise",
+    "h1": "2BHK Residential Flat",
+    "canonical": "https://maitrise.in/residential-flat/urban-comfort/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/residential-flat/shendge/",
+    "oldUrl": "https://maitrise.in/residential-flat/shendge/",
+    "title": "Shendge – Maitrise",
+    "h1": "Mr. Shendge",
+    "canonical": "https://maitrise.in/residential-flat/shendge/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/commercial-space/elegant-workspace/",
+    "oldUrl": "https://maitrise.in/commercial-space/elegant-workspace/",
+    "title": "Elegant Workspace – Maitrise",
+    "h1": "Elegant Workspace",
+    "canonical": "https://maitrise.in/commercial-space/elegant-workspace/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  },
+  {
+    "type": "project",
+    "path": "/commercial-space/contemporary-workspace/",
+    "oldUrl": "https://maitrise.in/commercial-space/contemporary-workspace/",
+    "title": "Contemporary Workspace – Maitrise",
+    "h1": "Contemporary Workspace",
+    "canonical": "https://maitrise.in/commercial-space/contemporary-workspace/",
+    "gallery": "9 images",
+    "status": "rebuilt"
+  }
+]

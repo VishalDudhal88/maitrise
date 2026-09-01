@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+interface Props { images: ImageMetadata[]; alt: string; }
+const { images, alt } = Astro.props;
+---
+<!-- Masonry-style gallery with a lightbox. -->
+<div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:_balance]" data-gallery>
+  {images.map((img, i) => (
+    <button
+      type="button"
+      class="mb-5 block w-full overflow-hidden group reveal bg-surface-2 rounded-2xl"
+      data-lightbox
+      data-index={i}
+      aria-label={`View image ${i + 1} of ${images.length}`}
+    >
+      <Image
+        src={img}
+        alt={`${alt} — image ${i + 1}`}
+        widths={[400, 700, 1100]}
+        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 92vw"
+        class="w-full h-auto object-cover transition-transform duration-[1.1s] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+      />
+    </button>
+  ))}
+</div>
+
+<!-- Lightbox overlay -->
+<div class="fixed inset-0 z-[100] hidden items-center justify-center bg-ink/95 p-4" data-lb-overlay>
+  <button type="button" class="absolute top-5 right-5 text-cream/80 hover:text-cream p-2" data-lb-close aria-label="Close">
+    <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+  <button type="button" class="absolute left-4 md:left-8 text-cream/70 hover:text-cream p-2" data-lb-prev aria-label="Previous">
+    <svg viewBox="0 0 24 24" class="h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.2"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <button type="button" class="absolute right-4 md:right-8 text-cream/70 hover:text-cream p-2" data-lb-next aria-label="Next">
+    <svg viewBox="0 0 24 24" class="h-9 w-9" fill="none" stroke="currentColor" stroke-width="1.2"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+  <img data-lb-img src="" alt="" class="max-h-[86vh] max-w-[92vw] object-contain shadow-2xl" />
+  <div class="absolute bottom-5 left-1/2 -translate-x-1/2 text-cream/70 text-sm" data-lb-counter></div>
+</div>
+
+<script>
+  const overlay = document.querySelector<HTMLElement>('[data-lb-overlay]');
+  if (overlay) {
+    const imgEl = overlay.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const counter = overlay.querySelector<HTMLElement>('[data-lb-counter]')!;
+    const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-lightbox]')];
+    // Full-size sources come from each trigger's <img> currentSrc.
+    const srcOf = (i: number) => triggers[i].querySelector('img')!.currentSrc || triggers[i].querySelector('img')!.src;
+    let cur = 0;
+    const show = (i: number) => {
+      cur = (i + triggers.length) % triggers.length;
+      imgEl.src = srcOf(cur);
+      counter.textContent = `${cur + 1} / ${triggers.length}`;
+    };
+    const open = (i: number) => { show(i); overlay.classList.remove('hidden'); overlay.classList.add('flex'); document.documentElement.style.overflow = 'hidden'; };
+    const close = () => { overlay.classList.add('hidden'); overlay.classList.remove('flex'); document.documentElement.style.overflow = ''; };
+    triggers.forEach((t, i) => t.addEventListener('click', () => open(i)));
+    overlay.querySelector('[data-lb-close]')?.addEventListener('click', close);
+    overlay.querySelector('[data-lb-prev]')?.addEventListener('click', () => show(cur - 1));
+    overlay.querySelector('[data-lb-next]')?.addEventListener('click', () => show(cur + 1));
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (overlay.classList.contains('hidden')) return;
+      if (e.key === 'Escape') close();
+      if (e.key === 'ArrowLeft') show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
+  }
+</script>
