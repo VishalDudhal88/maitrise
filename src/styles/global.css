@@ -55,9 +55,8 @@
     letter-spacing: 0.01em;
     color: var(--color-ink);
   }
-  /* Italiana ships a single weight (400). Force every display-font element to a
-     true 400 and disable faux-weight synthesis (elements like <figcaption> and
-     the footer wordmark otherwise inherit the body's 300 and get synthesised). */
+  /* Italiana ships a single weight (400). Force it on every display-font element
+     and disable faux-weight synthesis. */
   h1, h2, h3, h4, h5, h6, .font-display {
     font-weight: 400;
     font-synthesis: none;

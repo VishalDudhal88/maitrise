@@ -4,16 +4,7 @@ import type { Project } from '@/data/projects';
 interface Props { project: Project; }
 const { project } = Astro.props;
 ---
-<!-- Breadcrumb + intro -->
-<section class="container-x pt-6 pb-4">
-  <nav class="text-xs tracking-wider uppercase text-muted flex flex-wrap items-center gap-2" aria-label="Breadcrumb">
-    <a href="/" class="hover:text-ink transition-colors">Home</a><span>/</span>
-    <a href={project.categoryPath} class="hover:text-ink transition-colors">{project.categoryLabel}</a><span>/</span>
-    <span class="text-ink">{project.name}</span>
-  </nav>
-</section>
-
-<section class="container-x pb-14 md:pb-20 grid lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
+<section class="container-x pt-6 md:pt-10 pb-14 md:pb-20 grid lg:grid-cols-[1.3fr_1fr] gap-12 items-start">
   <div class="reveal">
     <span class="eyebrow">Project Detail</span>
     <h1 class="mt-5 font-display text-4xl md:text-6xl leading-[1.03]">{project.heading}</h1>
